@@ -20,8 +20,8 @@ import team1403.lib.util.CougarLogger;
 import team1403.lib.util.SwerveDriveOdometry;
 import team1403.lib.util.SwerveDrivePoseEstimator;
 import team1403.robot.RobotConfig;
-import team1403.robot.RobotConfig.CanBus;
 import team1403.robot.RobotConfig.Swerve;
+import team1403.robot.RobotConfig.CanBus;
 
 /**
 * The drivetrain of the robot. Consists of for swerve modules and the

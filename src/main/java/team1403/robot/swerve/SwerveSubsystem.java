@@ -15,21 +15,21 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team1403.lib.core.CougarLibInjectedParameters;
 import team1403.lib.core.CougarSubsystem;
-import team1403.lib.device.wpi.NavxAhrs;
 import team1403.lib.util.CougarLogger;
 import team1403.lib.util.SwerveDriveOdometry;
 import team1403.lib.util.SwerveDrivePoseEstimator;
 import team1403.robot.RobotConfig;
 import team1403.robot.RobotConfig.Swerve;
 import team1403.robot.RobotConfig.CanBus;
+import team1403.lib.device.wpi.NavxAhrs;
 
 /**
 * The drivetrain of the robot. Consists of for swerve modules and the
 * gyroscope.
 */
 public class SwerveSubsystem extends CougarSubsystem {
- private final NavxAhrs m_navx2;
- private final SwerveModule[] m_modules;
+  private final NavxAhrs m_navx2;
+  private final SwerveModule[] m_modules;
 
  private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds();
  private SwerveModuleState[] m_states = new SwerveModuleState[4];

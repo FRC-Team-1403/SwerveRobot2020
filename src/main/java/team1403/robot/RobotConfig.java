@@ -1,4 +1,4 @@
-package team1403.robot.__replaceme__;
+package team1403.robot;
 
 /**
  * This class holds attributes for the robot configuration.
@@ -41,6 +41,12 @@ public final class RobotConfig {
      */
     public int driverPort = 1;
     public int copilotPort = 2;
+  }
+
+  public static class Swerve {
+    public static final double kTrackWidth = 0.0;
+    
+    public static final double kWheelBase = 0.0;
   }
 
   // Add custom subsystem configs here.

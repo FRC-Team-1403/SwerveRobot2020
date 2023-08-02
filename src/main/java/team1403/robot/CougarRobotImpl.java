@@ -1,4 +1,4 @@
-package team1403.robot.__replaceme__;
+package team1403.robot;
 
 import static edu.wpi.first.wpilibj.XboxController.Button;
 

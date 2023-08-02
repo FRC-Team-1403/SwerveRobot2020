@@ -1,0 +1,5 @@
+[submodule "CougarLib"]
+	path = CougarLib
+	url = https://github.com/FRC-Team-1403/CougarLib.git
+	branch = main
+	update = rebase

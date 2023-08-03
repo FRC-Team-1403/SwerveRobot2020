@@ -73,10 +73,10 @@ public class RobotConfig {
             // Back right
             new Translation2d(-kTrackWidth / 2.0, -kWheelBase / 2.0));
 
-    public static final double frontLeftEncoderOffset = -(4.669437518323892 - Math.PI);
-    public static final double frontRightEncoderOffset = -(0.009203884727314 + Math.PI);
-    public static final double backLeftEncoderOffset = -(4.680175383839091 - Math.PI);
-    public static final double backRightEncoderOffset = -(5.776971647177325 - Math.PI);
+    public static final double frontLeftEncoderOffset = -(4.558990901596125 - Math.PI);
+    public static final double frontRightEncoderOffset = -(1.813165291280828 + Math.PI);
+    public static final double backLeftEncoderOffset = -(1.641359443037636 - Math.PI);
+    public static final double backRightEncoderOffset = -(5.551476471358136 + 1.334563285460508  + Math.PI);
 
     public static final double kDriveReduction = (14.0 / 50.0) * (27.0 / 17.0) * (15.0 / 45.0);
     public static final double kSteerReduction = (15.0 / 32.0) * (10.0 / 60.0);
@@ -158,21 +158,22 @@ public class RobotConfig {
   public static class CanBus {
 
     // Swerve CanBus ids
-    public static final int frontLeftDriveId = 6;
-    public static final int frontLeftSteerId = 7;
+    public static final int frontLeftDriveId = 16;
+    public static final int frontLeftSteerId = 5;
     public static final int frontLeftEncoderId = 3;
 
-    public static final int frontRightDriveId = 8;
-    public static final int frontRightSteerId = 9;
-    public static final int frontRightEncoderId = 1;
+    public static final int frontRightDriveId = 9;
+    public static final int frontRightSteerId = 12;
+    public static final int frontRightEncoderId = 4;
 
-    public static final int backLeftDriveId = 10;
-    public static final int backLeftSteerId = 11;
+    public static final int backLeftDriveId = 8;
+    public static final int backLeftSteerId = 7;
     public static final int backLeftEncoderId = 2;
 
-    public static final int backRightDriveId = 12;
-    public static final int backRightSteerId = 13;
-    public static final int backRightEncoderId = 4;
+    public static final int backRightDriveId = 14;
+    public static final int backRightSteerId = 6;
+    public static final int backRightEncoderId = 1;
+    
   }
 
   /**

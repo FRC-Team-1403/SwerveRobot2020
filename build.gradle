@@ -4,7 +4,6 @@ plugins {
 }
 
 apply from: "${project.rootDir}/buildSrc/java.gradle"
-
 project.buildDir = "${project.rootDir}/build"
 
 // Change __replaceme__ with a custom package name for this robot.
@@ -42,7 +41,7 @@ deploy {
 
                 // Static files artifact
                 frcStaticFileDeploy(getArtifactTypeClass('FileTreeArtifact')) {
-                    files = project.fileTree('${project.projectDir}/src/main/deploy')
+                    files = project.fileTree('src/main/deploy')
                     directory = '/home/lvuser/deploy'
                 }
             }
@@ -79,6 +78,8 @@ dependencies {
     nativeRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.desktop)
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
+
+    implementation 'org.json:json:20211205'
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -103,13 +104,3 @@ wpi.java.configureTestTasks(test)
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
-
-// Only uncomment these lines if building CodeSamples.
-// Do not commit these changes into the main branch because
-// these code samples are not intended to be built into competition robots.
-// If a future example becomes desirable in a competition robot then the
-// implementation should be refactored into either a "team1403.lib"
-// or "team1403.robot" package and the example should import it from there.
-//
-// sourceSets.main.java.srcDirs += ['CodeSamples/src/main/java']
-// sourceSets.test.java.srcDirs += ['CodeSamples/src/test/java']

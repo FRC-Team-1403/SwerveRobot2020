@@ -67,10 +67,9 @@ public class AutoManager {
     pathplannerAuto = autoBuilder.fullAuto(pathGroup);
 
   }
-  
+
   /**
-   * Red side right grid autonomous command. 
-   * Score 2 pieces.
+   * Example pathplanner auto
    */
   public Command getPathplannerAuto(SwerveSubsystem swerve) {
     swerve.setSpeedLimiter(1);

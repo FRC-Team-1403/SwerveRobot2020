@@ -66,7 +66,7 @@ public class AutoManager {
     swerve.setSpeedLimiter(0.5);
     //this changes it but idk what to do next, still researching... But we need to make it into a swerve command
     pathplannerAuto = autoBuilder.fullAuto(pathGroup);
-
+    swerve.setSpeedLimiter(1);
   }
 
   /**

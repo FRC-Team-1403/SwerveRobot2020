@@ -63,6 +63,7 @@ public class AutoManager {
         true, // Should th>e path be automatically mirrored depending on alliance color. Optional, defaults to true
         swerve // The drive subsystem. Used to properly set the requirements of path following commands
     );
+    swerve.setSpeedLimiter(0.5);
     //this changes it but idk what to do next, still researching... But we need to make it into a swerve command
     pathplannerAuto = autoBuilder.fullAuto(pathGroup);
 

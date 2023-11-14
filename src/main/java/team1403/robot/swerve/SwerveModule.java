@@ -41,7 +41,8 @@ public class SwerveModule implements Device {
     private final SparkMaxPIDController m_steerPidController;
     private final CougarLogger m_logger;
     private final String m_name;
-  
+    private final boolean m_inverted;
+
     /**
      * Swerve Module represents a singular swerve module for a
      * swerve drive train.
@@ -58,7 +59,13 @@ public class SwerveModule implements Device {
      */
     public SwerveModule(String name, int driveMotorPort, int steerMotorPort,
         int canCoderPort, double offset, CougarLogger logger) {
-  
+      this(name, driveMotorPort, steerMotorPort, canCoderPort, offset, logger, true);
+    }
+
+    public SwerveModule(String name, int driveMotorPort, int steerMotorPort,
+    int canCoderPort, double offset, CougarLogger logger, boolean inverted)
+    {
+      m_inverted = inverted;
       m_logger = logger;
       m_name = name;
   
@@ -129,7 +136,7 @@ public class SwerveModule implements Device {
     }
   
     public void initDriveMotor() {
-      m_driveMotor.setInverted(true);
+      m_driveMotor.setInverted(m_inverted);
       m_driveMotor.setVoltageCompensation(RobotConfig.Swerve.kVoltageSaturation);
       m_driveMotor.setAmpLimit(RobotConfig.Swerve.kCurrentLimit);
       m_driveMotor.getCanSparkMaxApi().setPeriodicFramePeriod(

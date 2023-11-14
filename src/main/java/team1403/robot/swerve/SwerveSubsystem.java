@@ -84,13 +84,13 @@ public class SwerveSubsystem extends CougarSubsystem {
            CanBus.frontLeftEncoderId, Swerve.frontLeftEncoderOffset, logger),
        new SwerveModule("Front Right Module",
            CanBus.frontRightDriveId, CanBus.frontRightSteerId,
-           CanBus.frontRightEncoderId, Swerve.frontRightEncoderOffset, logger),
+           CanBus.frontRightEncoderId, Swerve.frontRightEncoderOffset, logger, false),
        new SwerveModule("Back Left Module",
            CanBus.backLeftDriveId, CanBus.backLeftSteerId,
            CanBus.backLeftEncoderId, Swerve.backLeftEncoderOffset, logger),
        new SwerveModule("Back Right Module",
            CanBus.backRightDriveId, CanBus.backRightSteerId,
-           CanBus.backRightEncoderId, Swerve.backRightEncoderOffset, logger),
+           CanBus.backRightEncoderId, Swerve.backRightEncoderOffset, logger, false),
    };
 
    m_odometer = new SwerveDrivePoseEstimator(Swerve.kDriveKinematics, new Rotation2d(),
@@ -116,6 +116,7 @@ public class SwerveSubsystem extends CougarSubsystem {
    m_offset = new Translation2d();
    m_rollOffset = -m_navx2.getRoll();
    m_yawOffset = 0;
+   setSpeedLimiter(0.5);
 
  }
 

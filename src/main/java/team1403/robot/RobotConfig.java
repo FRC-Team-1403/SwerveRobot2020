@@ -67,16 +67,17 @@ public class RobotConfig {
             // Front left
             new Translation2d(kTrackWidth / 2.0, kWheelBase / 2.0),
             // Front right
+            
             new Translation2d(kTrackWidth / 2.0, -kWheelBase / 2.0),
             // Back left
             new Translation2d(-kTrackWidth / 2.0, kWheelBase / 2.0),
             // Back right
             new Translation2d(-kTrackWidth / 2.0, -kWheelBase / 2.0));
 
-    public static final double frontLeftEncoderOffset = -(4.558990901596125 - Math.PI);
-    public static final double frontRightEncoderOffset = -(1.813165291280828 + Math.PI);
-    public static final double backLeftEncoderOffset = -(1.641359443037636 - Math.PI);
-    public static final double backRightEncoderOffset = -(5.551476471358136 + 1.334563285460508  + Math.PI);
+    public static final double frontLeftEncoderOffset = -(4.667903537536006 - Math.PI);
+    public static final double frontRightEncoderOffset = -(4.936350175415994 - Math.PI);
+    public static final double backLeftEncoderOffset = -(4.743068596142402 - Math.PI); //4.743068596142402
+    public static final double backRightEncoderOffset = -(0.593650564911743 + Math.PI);//
 
     public static final double kDriveReduction = (14.0 / 50.0) * (27.0 / 17.0) * (15.0 / 45.0);
     public static final double kSteerReduction = (15.0 / 32.0) * (10.0 / 60.0);

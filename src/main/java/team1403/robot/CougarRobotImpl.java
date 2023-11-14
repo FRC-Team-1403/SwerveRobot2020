@@ -158,7 +158,10 @@ public class CougarRobotImpl extends CougarRobot {
     }
     return new PS4Controller(port);
   }
+  public void simulationPeriodic() {
+   //heart of the teleop code
 
+  }
   // private final BuiltinSubsystem m_builtins;
   // private final PhotonVisionSubsystem m_visionSubsystem;
   private final SwerveSubsystem m_swerveSubsystem;

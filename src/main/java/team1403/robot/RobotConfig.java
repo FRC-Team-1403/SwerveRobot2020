@@ -47,7 +47,7 @@ public class RobotConfig {
     public static final int kStatusFrameGeneralPeriodMs = 250;
     public static final int kCanTimeoutMs = 250;
 
-    public static final double kPTurning = 1.125;
+    public static final double kPTurning = 0.3;
     public static final double kITurning = 0.0;
     public static final double kDTurning = 0.0;
 
@@ -96,7 +96,7 @@ public class RobotConfig {
     // (kMaxSpeed / Math.hypot(kTrackWidth / 2.0, kWheelBase / 2.0)); // 39.795095397
 
     public static final double kVoltageSaturation = 12.0;
-    public static final double kCurrentLimit = 40.0;
+    public static final int kCurrentLimit = 40;
 
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 2;

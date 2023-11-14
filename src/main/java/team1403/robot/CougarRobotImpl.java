@@ -81,20 +81,19 @@ public class CougarRobotImpl extends CougarRobot {
     // Setting default command of swerve subsystem
     m_swerveSubsystem.setDefaultCommand(new SwerveCommand(
         m_swerveSubsystem,
-        () 
-        -> -deadband(driveController.getLeftX(), 0),
+        () -> -deadband(driveController.getLeftX(), 0),
         () -> -deadband(driveController.getLeftY(), 0),
-        () -> -deadband(driveController.getRightX(), 0),
+        () -> deadband(driveController.getRightX(), 0),
         () -> driveController.getYButton(),
         () -> driveController.getRightTriggerAxis()));
 
     new Trigger(() -> driveController.getBButton()).onFalse(
         new InstantCommand(() -> m_swerveSubsystem.zeroGyroscope()));
-
     new Trigger(() -> driveController.getXButton())
         .onTrue(new InstantCommand(() -> m_swerveSubsystem.setXModeEnabled(true)));
     new Trigger(() -> driveController.getXButton())
         .onFalse(new InstantCommand(() -> m_swerveSubsystem.setXModeEnabled(false)));
+    
   }
 
   /**

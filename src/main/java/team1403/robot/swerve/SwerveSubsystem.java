@@ -60,8 +60,6 @@ public class SwerveSubsystem extends CougarSubsystem {
  private double m_yawOffset;
  private double m_rollOffset;
 
- private double m_calc = 0;
-
  private boolean m_isXModeEnabled = false;
 
  /**
@@ -97,16 +95,8 @@ public class SwerveSubsystem extends CougarSubsystem {
        getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
 
    addDevice(m_navx2.getName(), m_navx2);
-   new Thread(() -> {
-     while (m_navx2.isCalibrating()) {
-       try {
-         Thread.sleep(10);
-       } catch (InterruptedException e) {
-         e.printStackTrace();
-       }
-     }
-     zeroGyroscope();
-   }).start();
+   if(m_navx2.isConnected())
+    while (m_navx2.isCalibrating());
 
    m_desiredHeading = getGyroscopeRotation().getDegrees();
 
@@ -117,7 +107,6 @@ public class SwerveSubsystem extends CougarSubsystem {
    m_rollOffset = -m_navx2.getRoll();
    m_yawOffset = 0;
    setSpeedLimiter(0.5);
-
  }
 
  /**
@@ -441,13 +430,13 @@ public class SwerveSubsystem extends CougarSubsystem {
    if (Math.abs(m_navx2.getAngularVelocity()) > 0.1) {
      m_desiredHeading = getGyroscopeRotation().getDegrees();
    } else if (translationalVelocity > 1) {
-     m_calc = m_driftCorrectionPid.calculate(getGyroscopeRotation().getDegrees(),
+     double calc = m_driftCorrectionPid.calculate(getGyroscopeRotation().getDegrees(),
          m_desiredHeading);
-     if (Math.abs(m_calc) >= 0.55) {
-       m_chassisSpeeds.omegaRadiansPerSecond += m_calc;
+     if (Math.abs(calc) >= 0.55) {
+       chassisSpeeds.omegaRadiansPerSecond += calc;
      }
      tracef("driftCorrection %f, corrected omegaRadiansPerSecond %f",
-         m_calc, m_chassisSpeeds.omegaRadiansPerSecond);
+         calc, chassisSpeeds.omegaRadiansPerSecond);
    }
    return chassisSpeeds;
  }
@@ -491,8 +480,8 @@ public class SwerveSubsystem extends CougarSubsystem {
    if (this.m_isXModeEnabled) {
      xMode();
    } else {
-     m_chassisSpeeds = translationalDriftCorrection(m_chassisSpeeds);
-     m_chassisSpeeds = rotationalDriftCorrection(m_chassisSpeeds);
+     //m_chassisSpeeds = translationalDriftCorrection(m_chassisSpeeds);
+     //m_chassisSpeeds = rotationalDriftCorrection(m_chassisSpeeds);
 
      m_states = Swerve.kDriveKinematics.toSwerveModuleStates(m_chassisSpeeds, m_offset);
      setModuleStates(m_states);

@@ -10,6 +10,7 @@ import com.pathplanner.lib.auto.PIDConstants;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import team1403.robot.RobotConfig.Swerve;
 import team1403.robot.swerve.SwerveSubsystem;
 
@@ -65,7 +66,7 @@ public class AutoManager {
     );
     //swerve.setSpeedLimiter(0.5);
     //this changes it but idk what to do next, still researching... But we need to make it into a swerve command
-    pathplannerAuto = autoBuilder.fullAuto(pathGroup);
+    pathplannerAuto = autoBuilder.fullAuto(pathGroup).andThen(() -> swerve.stop());
     //swerve.setSpeedLimiter(1);
   }
 
@@ -74,6 +75,6 @@ public class AutoManager {
    */
   public Command getPathplannerAuto(SwerveSubsystem swerve) {
     //swerve.setSpeedLimiter(0.5);
-    return pathplannerAuto;
+    return new InstantCommand(() -> swerve.setSpeedLimiter(1.0), swerve).andThen(pathplannerAuto);
   }
 }

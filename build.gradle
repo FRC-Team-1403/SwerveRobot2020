@@ -16,7 +16,6 @@ def ROBOT_MAIN_CLASS = "team1403.robot.Main"
 // --------------------  Standard build.gradle  --------------------
 // other than plugins and ROBOT_MAIN_CLASS definition above.
 // -----------------------------------------------------
-------------
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11

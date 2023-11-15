@@ -18,7 +18,7 @@ public class Turret extends SubsystemBase {
     public Turret() {
         yawMotor = new TalonSRX(RobotConfig.Turret.turretMotor);
         yawMotor.setInverted(true);
-        absEncoder = new TurretEncoderV2(SubsystemManager.getInstance().getNEODrivetrain(), RobotConfig.Turret.absEncoderPort);
+        absEncoder = new TurretEncoderV2(RobotConfig.Turret.absEncoderPort);
     }
     
     public void setSpeedManual(double in) {

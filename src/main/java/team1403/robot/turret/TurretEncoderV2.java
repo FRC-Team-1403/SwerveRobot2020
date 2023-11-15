@@ -12,8 +12,6 @@ can interface with the turret. */
 //In progress1
 
 public class TurretEncoderV2 {
-    
-    private final NEODrivetrain m_dt;
 
     private DutyCycleEncoder encoder;
     private PID positionPID;
@@ -26,8 +24,7 @@ public class TurretEncoderV2 {
     private double robotStartAngle = 0;
     //private double previousValue;
     
-    public TurretEncoderV2(NEODrivetrain dt, int port) {
-        m_dt = dt;
+    public TurretEncoderV2(int port) {
         encoder = new DutyCycleEncoder(port);
         //previousValue = encoder.get();
         this.positionPID = new PID("Turret encoder", this::getTurretAngle, 0.03, 0, 0);
@@ -74,10 +71,6 @@ public class TurretEncoderV2 {
         setSetpoint(setpoint + 180);
     }
 
-    public double getRobotAngle() {
-        return ((m_dt.getGyroReading() + robotStartAngle + 180)%360) - 180;
-    }
-
     public void setRobotStartAngle(double angle) {
         robotStartAngle = angle;
     }
@@ -98,11 +91,6 @@ public class TurretEncoderV2 {
         return positionPID.getError();
     }
 
-    //precondition: between -180 and 180
-    public void setFieldRelativeSetpoint(double setpoint) {
-        setRobotRelativeSetpoint(setpoint - getRobotAngle());
-    }
-
     public void handleReset() {
         if(shouldReset) {
             System.out.println("Resetting");
@@ -115,14 +103,6 @@ public class TurretEncoderV2 {
             positionPID.setOffset(offset * RobotConfig.Turret.absEncoderGearRatio);
             shouldReset = false;
         }
-    }
-
-    public double getFieldRelativeSetpoint() {
-        return this.getRobotRelativeSetpoint() + getRobotAngle();
-    }
-    
-    public double getFieldRelativeAngle() {
-        return this.getRobotRelativeAngle() + getRobotAngle();
     }
 
     public double getPIDOutput() {

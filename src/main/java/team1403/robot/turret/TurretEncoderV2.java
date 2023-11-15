@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team1403.robot.RobotConfig;
 import team1403.robot.util.NEODrivetrain;
+import team1403.robot.util.PID;
 
 /* the turret encoder allow an absolute encoder to be used so that it
 can interface with the turret. */
@@ -41,7 +42,7 @@ public class TurretEncoderV2 {
         }
         previousValue = encoder.get();
 */
-        return (encoder.get() + offset) * 360 * Constants.absEncoderGearRatio;
+        return (encoder.get() + offset) * 360 * RobotConfig.Turret.absEncoderGearRatio;
     }
 
     //precondition: between 0 and 360 - deadzoneSize
@@ -106,12 +107,12 @@ public class TurretEncoderV2 {
         if(shouldReset) {
             System.out.println("Resetting");
             //offset is in raw encoder reading
-            offset = (magnetPosition / 360.0 / Constants.absEncoderGearRatio) 
-                + deadzoneAngle/360.0 / Constants.absEncoderGearRatio
+            offset = (magnetPosition / 360.0 / RobotConfig.Turret.absEncoderGearRatio) 
+                + deadzoneAngle/360.0 / RobotConfig.Turret.absEncoderGearRatio
                 - encoder.get();
                 
             //positionPID is in turret angle
-            positionPID.setOffset(offset * Constants.absEncoderGearRatio);
+            positionPID.setOffset(offset * RobotConfig.Turret.absEncoderGearRatio);
             shouldReset = false;
         }
     }

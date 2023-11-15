@@ -1,5 +1,6 @@
 package team1403.robot.util;
 
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -7,7 +8,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team1403.robot.RobotConfig;
-import team1403.robot.Gains;
+import team1403.robot.util.Gains;
 import team1403.robot.RobotContainer;
 import team1403.robot.util.Conversions;
 

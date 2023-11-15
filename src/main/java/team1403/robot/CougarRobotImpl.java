@@ -16,6 +16,7 @@ import team1403.lib.core.CougarRobot;
 import team1403.lib.util.CougarLogger;
 import team1403.robot.swerve.SwerveCommand;
 import team1403.robot.swerve.SwerveSubsystem;
+import team1403.robot.turret.Turret;
 import team1403.robot.RobotConfig.Operator;
 
 /**
@@ -61,9 +62,11 @@ public class CougarRobotImpl extends CougarRobot {
     CommandScheduler.getInstance().removeDefaultCommand(m_swerveSubsystem);
     return m_autonChooser.getSelected();
   }
-
+  
   @Override
   public void teleopInit() {
+    m_Turret = new Turret();
+    m_Turret.setSpeed(1);
     m_swerveSubsystem.setYawGyroscopeOffset(180 - m_swerveSubsystem.getGyroscopeRotation().getDegrees());
     configureOperatorInterface();
     configureDriverInterface();
@@ -86,7 +89,8 @@ public class CougarRobotImpl extends CougarRobot {
         () -> deadband(driveController.getRightX(), 0),
         () -> driveController.getYButton(),
         () -> driveController.getRightTriggerAxis()));
-
+    new Trigger(() -> driveController.getAButtonPressed()).onFalse(
+          new InstantCommand(() -> m_Turret.setSpeedManual(1)));
     new Trigger(() -> driveController.getBButton()).onFalse(
         new InstantCommand(() -> m_swerveSubsystem.zeroGyroscope()));
     new Trigger(() -> driveController.getXButton())
@@ -165,5 +169,6 @@ public class CougarRobotImpl extends CougarRobot {
   // private final PhotonVisionSubsystem m_visionSubsystem;
   private final SwerveSubsystem m_swerveSubsystem;
   private final SendableChooser<Command> m_autonChooser;
+  private Turret m_Turret;
   // private final LightSubsystem m_lightSubsystem;
 }

@@ -2,8 +2,8 @@ package team1403.robot.turret;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
-import frc.robot.subsystems.NEODrivetrain;
+import team1403.robot.RobotConfig;
+import team1403.robot.util.NEODrivetrain;
 
 /* the turret encoder allow an absolute encoder to be used so that it
 can interface with the turret. */

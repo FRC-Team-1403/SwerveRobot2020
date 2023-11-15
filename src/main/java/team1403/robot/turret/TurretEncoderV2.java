@@ -3,7 +3,6 @@ package team1403.robot.turret;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team1403.robot.RobotConfig;
-import team1403.robot.util.NEODrivetrain;
 import team1403.robot.util.PID;
 
 /* the turret encoder allow an absolute encoder to be used so that it

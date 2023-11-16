@@ -89,9 +89,6 @@ public class CougarRobotImpl extends CougarRobot {
         () -> deadband(driveController.getRightX(), 0),
         () -> driveController.getYButton(),
         () -> driveController.getRightTriggerAxis()));
-
-        new Trigger(() -> driveController.getPOV() == 90).onTrue(
-                    new InstantCommand(() -> m_Turret.setSpeed(1.0)));
        new Trigger(() -> driveController.getBButton()).onFalse(
         new InstantCommand(() -> m_swerveSubsystem.zeroGyroscope()));
     new Trigger(() -> driveController.getBButton()).onFalse(

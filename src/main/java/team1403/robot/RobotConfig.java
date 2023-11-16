@@ -181,7 +181,8 @@ public class RobotConfig {
     public static double absEncoderGearRatio = 18.0/120.0;
     public static int absEncoderPort = 5;
     public static int hallEffectPort = 1;
-    public static int turretMotor = 4;
+    // problem
+    public static int turretMotor = 5;
   
   }
 

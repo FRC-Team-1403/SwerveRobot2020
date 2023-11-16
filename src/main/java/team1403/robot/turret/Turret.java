@@ -3,11 +3,14 @@ package team1403.robot.turret;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team1403.robot.RobotConfig;
 
 public class Turret extends SubsystemBase {
-    
+    private boolean commandCalled = false;
     private TalonSRX yawMotor;
 
     private TurretEncoderV2 absEncoder;
@@ -19,6 +22,7 @@ public class Turret extends SubsystemBase {
     }
     
     public void setSpeedManual(double in) {
+        commandCalled = true;
         if(absEncoder.getTurretAngle() < 360.0-absEncoder.getDeadzoneWidth() && absEncoder.getTurretAngle() > 0) {
             yawMotor.set(ControlMode.PercentOutput, in);
         } else if(absEncoder.getTurretAngle() > 360 - absEncoder.getDeadzoneWidth() && in < 0) {
@@ -41,7 +45,10 @@ public class Turret extends SubsystemBase {
         
         yawMotor.set(ControlMode.PercentOutput, in);
     }
-
+    
+    public void forceSpeed(double in) {
+        yawMotor.set(ControlMode.PercentOutput, in);
+    }
     public void runPID() {
         setSpeed(absEncoder.getPIDOutput());
     }
@@ -81,6 +88,7 @@ public class Turret extends SubsystemBase {
 
     @Override
     public void periodic() {
-
+        SmartDashboard.putBoolean("Turret Command Call", commandCalled );
+        SmartDashboard.putNumber("Turret Angle", absEncoder.getTurretAngle());
     }
 }

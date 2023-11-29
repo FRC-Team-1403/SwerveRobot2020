@@ -178,11 +178,11 @@ public class RobotConfig {
   }
 
   public static class Turret {
-    public static double absEncoderGearRatio = 18.0/120.0;
-    public static int absEncoderPort = 5;
-    public static int hallEffectPort = 1;
-    // problem
-    public static int turretMotor = 5;
+    public static final double absEncoderGearRatio = 18.0/120.0;
+    public static final int absEncoderPort = 5;
+    public static final int hallEffectPort = 1;
+    // checked with phoenix
+    public static final int turretMotor = 19;
   
   }
 
@@ -191,15 +191,7 @@ public class RobotConfig {
    */
   public static class RioPorts {
 
-    
-    public static final int kWristAbsoluteEncoder = 1; //DIO
-
-    public static final int kArmAbsoluteEncoder = 3; ///Analog
-
-    public static final int kArmLimitSwitch = 0; //DIO
-
-    public static final int kExtensionMinMagneticSwitch = 2; //DIO
-    public static final int kExtensionMaxMagneticSwitch = 3; //DIO
+  
   }
 
   /**

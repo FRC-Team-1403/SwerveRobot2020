@@ -45,6 +45,7 @@ public class CougarRobotImpl extends CougarRobot {
     var logger = CougarLogger.getChildLogger(
         parameters.getRobotLogger(), "BuiltinDevices");
     m_swerveSubsystem = new SwerveSubsystem( parameters);
+    m_Turret = new Turret();
     CameraServer.startAutomaticCapture();
     m_autonChooser = new SendableChooser<Command>();
   }
@@ -65,8 +66,7 @@ public class CougarRobotImpl extends CougarRobot {
   
   @Override
   public void teleopInit() {
-    m_Turret = new Turret();
-    m_Turret.setSpeed(1);
+    //m_Turret.setSpeed(1);
     m_swerveSubsystem.setYawGyroscopeOffset(180 - m_swerveSubsystem.getGyroscopeRotation().getDegrees());
     configureOperatorInterface();
     configureDriverInterface();
@@ -91,8 +91,6 @@ public class CougarRobotImpl extends CougarRobot {
         () -> driveController.getRightTriggerAxis()));
        new Trigger(() -> driveController.getBButton()).onFalse(
         new InstantCommand(() -> m_swerveSubsystem.zeroGyroscope()));
-    new Trigger(() -> driveController.getBButton()).onFalse(
-        new InstantCommand(() -> m_swerveSubsystem.zeroGyroscope()));
     new Trigger(() -> driveController.getXButton())
         .onTrue(new InstantCommand(() -> m_swerveSubsystem.setXModeEnabled(true)));
     new Trigger(() -> driveController.getXButton())
@@ -105,7 +103,10 @@ public class CougarRobotImpl extends CougarRobot {
    */
   public void configureOperatorInterface() {
     XboxController xboxOperator = getXboxJoystick("Operator", Operator.pilotPort);
-    //left empty due to no arm
+    
+
+    new Trigger(() -> xboxOperator.getAButton()).onTrue(new InstantCommand(() -> m_Turret.setSpeed(0.2)));
+    new Trigger(() -> xboxOperator.getBButton()).onTrue(new InstantCommand(() -> m_Turret.setSpeed(-0.2)));
   }
 
   /**

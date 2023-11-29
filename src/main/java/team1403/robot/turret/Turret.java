@@ -36,7 +36,12 @@ public class Turret extends SubsystemBase {
     }
 
     public void setSpeed(double in) {
-        in = Math.clamp(in, -0.5, 0.5);
+        if(in > .5) {
+           in = .5; 
+        }
+        if(in < -.5) {
+            in = -.5;
+        }
         
         yawMotor.set(ControlMode.PercentOutput, in);
     }

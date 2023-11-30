@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team1403.robot.RobotConfig;
+import java.util.function.DoubleSupplier;
 
 public class Turret extends SubsystemBase {
     private boolean commandCalled = false;
     private TalonSRX yawMotor;
-
+    private DoubleSupplier  value;
     private TurretEncoderV2 absEncoder;
     
     public Turret() {
@@ -34,7 +35,9 @@ public class Turret extends SubsystemBase {
             stop();
         }
     }
-
+    public void centerPoint() {
+        
+    }
     public void setSpeed(double in) {
         if(in > .5) {
            in = .5; 
@@ -60,7 +63,9 @@ public class Turret extends SubsystemBase {
         setSpeed(absEncoder.getPIDOutput());
         absEncoder.setSetpoint(currSetpoint);
     }
-
+    public void setManualCommand(DoubleSupplier value) {
+        setSpeed(value.getAsDouble() * 0.5);
+    }
     public void stop() {
         yawMotor.set(ControlMode.PercentOutput, 0);
     }

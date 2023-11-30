@@ -1,10 +1,13 @@
 package team1403.robot;
 
 
+import com.fasterxml.jackson.databind.deser.impl.ValueInjector;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -65,9 +68,6 @@ public class CougarRobotImpl extends CougarRobot {
     CommandScheduler.getInstance().removeDefaultCommand(m_swerveSubsystem);
     return m_autonChooser.getSelected();
   }
-  public void teleopPeriodic() {
-    m_Turret.setSpeed(xboxOperator.getLeftX());
-  }
   @Override
   public void teleopInit() {
     //m_Turret.setSpeed(1);
@@ -75,7 +75,6 @@ public class CougarRobotImpl extends CougarRobot {
     configureOperatorInterface();
     configureDriverInterface();
   }
-
   /**
    * Configures the driver commands and their bindings.
    */
@@ -106,7 +105,8 @@ public class CougarRobotImpl extends CougarRobot {
    * Configures the operator commands and their bindings.
    */
   public void configureOperatorInterface() {
-
+    m_Turret.setDefaultCommand(new InstantCommand(() -> m_Turret.setSpeed(xboxOperator.getLeftX()), m_Turret));
+    new Trigger(() -> xboxOperator.getAButton()).onTrue(new InstantCommand(() -> m_Turret.setSpeed(xboxOperator.getLeftX())));
   }
 
   /**

@@ -34,6 +34,8 @@ import team1403.robot.RobotConfig.Operator;
  * do things.
  */
 public class CougarRobotImpl extends CougarRobot {
+  XboxController xboxOperator = getXboxJoystick("Operator", Operator.pilotPort);
+
   /**
    * Constructor.
    *
@@ -63,7 +65,9 @@ public class CougarRobotImpl extends CougarRobot {
     CommandScheduler.getInstance().removeDefaultCommand(m_swerveSubsystem);
     return m_autonChooser.getSelected();
   }
-  
+  public void teleopPeriodic() {
+    m_Turret.setSpeed(xboxOperator.getLeftX());
+  }
   @Override
   public void teleopInit() {
     //m_Turret.setSpeed(1);
@@ -102,11 +106,7 @@ public class CougarRobotImpl extends CougarRobot {
    * Configures the operator commands and their bindings.
    */
   public void configureOperatorInterface() {
-    XboxController xboxOperator = getXboxJoystick("Operator", Operator.pilotPort);
-    
 
-    new Trigger(() -> xboxOperator.getAButton()).onTrue(new InstantCommand(() -> m_Turret.setSpeed(0.2)));
-    new Trigger(() -> xboxOperator.getBButton()).onTrue(new InstantCommand(() -> m_Turret.setSpeed(-0.2)));
   }
 
   /**

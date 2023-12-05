@@ -89,8 +89,6 @@ public class Turret extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("Turret Command Call", commandCalled );
         SmartDashboard.putNumber("Turret Angle", absEncoder.getTurretAngle());
-        SmartDashboard.putNumber("target angle", absEncoder.getSetpoint());
     }
 }

@@ -36,7 +36,7 @@ public class Turret extends SubsystemBase {
         }
     }
     public void centerPoint() {
-        
+        absEncoder.setSetpoint(120);
     }
     public void setSpeed(double in) {
         if(in > .5) {
@@ -46,10 +46,6 @@ public class Turret extends SubsystemBase {
             in = -.5;
         }
         
-        yawMotor.set(ControlMode.PercentOutput, in);
-    }
-    
-    public void forceSpeed(double in) {
         yawMotor.set(ControlMode.PercentOutput, in);
     }
     public void runPID() {

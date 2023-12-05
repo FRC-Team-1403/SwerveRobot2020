@@ -6,7 +6,6 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,7 +16,6 @@ import team1403.lib.util.CougarLogger;
 import team1403.robot.swerve.SwerveCommand;
 import team1403.robot.swerve.SwerveSubsystem;
 import team1403.robot.turret.Turret;
-import team1403.robot.RobotConfig.Operator;
 /**
  * The heart of the robot.
  *
@@ -74,8 +72,10 @@ public class CougarRobotImpl extends CougarRobot {
     m_swerveSubsystem.setXModeEnabled(driveController.getXButton());
   }
   public void teleopPeriodicOperator() {
-    m_Turret.setSpeed(operatorController.getLeftX());
-    
+   if (operatorController.getAButton())
+    m_Turret.centerPoint();
+  m_Turret.setSpeed(operatorController.getLeftX());
+
   }
   @Override
   public void teleopInit() {
@@ -161,10 +161,6 @@ public class CougarRobotImpl extends CougarRobot {
           port, role);
     }
     return new PS4Controller(port);
-  }
-  public void simulationPeriodic() {
-   //heart of the teleop code
-
   }
   // private final BuiltinSubsystem m_builtins;
   // private final PhotonVisionSubsystem m_visionSubsystem;

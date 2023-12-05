@@ -108,9 +108,53 @@ public class CougarRobot {
    * Adds functionality to the teleop init method found in WpiLibRobotAdapter
    */
   public void teleopInit() {
-    
+
   }
 
+  /**
+   * Allows for custom functionality to be added during auto initiazlization.
+   */
+  public void autonomousInit() {
+
+  }
+
+  /**
+   * Makes it easier to prototype and iterate faster.
+   */
+  public void teleopPeriodic() {
+
+  }
+   /**
+   * Makes it easier to prototype and iterate faster.
+   */
+  public void testPeriodic() {
+
+  }
+   /**
+   * Makes it easier to prototype and iterate faster.
+   */
+  public void disabledPeriodic() {
+
+  }
+    /**
+   * Makes it easier to prototype and iterate faster.
+   */
+  public void autonomousPeriodic() {
+
+  }
+      /**
+   * Makes it easier to prototype and iterate faster.
+   */
+  public void simulationPeriodic() {
+
+  }
+  /**
+  For testing stuff
+
+   **/
+  public void testInit() {
+    
+  }
   /**
    * Returns the current operating mode.
    *

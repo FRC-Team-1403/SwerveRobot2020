@@ -146,6 +146,8 @@ public class WpiLibRobotAdapter<T extends CougarRobot> extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    m_cougarRobot.autonomousInit();
   }
 
   /**
@@ -177,6 +179,7 @@ public class WpiLibRobotAdapter<T extends CougarRobot> extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
 
     m_cougarRobot.changeMode(CougarRobot.Mode.TEST);
+    m_cougarRobot.testInit();
   }
 
   /**
@@ -194,27 +197,28 @@ public class WpiLibRobotAdapter<T extends CougarRobot> extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    // We dont want but base class forces us to override!
+    m_cougarRobot.disabledPeriodic();
   }
 
   @Override
   public void autonomousPeriodic() {
-    // We dont want but base class forces us to override!
+    m_cougarRobot.autonomousPeriodic();
   }
 
   @Override
   public void teleopPeriodic() {
-    // We dont want but base class forces us to override!
+    m_cougarRobot.teleopPeriodic();
   }
 
   @Override
   public void testPeriodic() {
-    // We dont want but base class forces us to override!
+    m_cougarRobot.testPeriodic();
   }
 
   @Override
   public void simulationPeriodic() {
-    // We dont want but base class forces us to override!
+    m_cougarRobot.simulationPeriodic();
+
   }
 
 

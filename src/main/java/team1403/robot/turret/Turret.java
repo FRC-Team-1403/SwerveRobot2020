@@ -35,9 +35,12 @@ public class Turret extends SubsystemBase {
             stop();
         }
     }
+
     public void centerPoint() {
-        absEncoder.setSetpoint(120);
+        setSetpoint(0);
+        runPID();
     }
+
     public void setSpeed(double in) {
         if(in > .5) {
            in = .5; 
@@ -75,7 +78,7 @@ public class Turret extends SubsystemBase {
         return this.absEncoder;
     }
 
-    public void setOffset(int reading) {
+    public void setOffset(double reading) {
         this.absEncoder.setOffset(reading);
     }
     

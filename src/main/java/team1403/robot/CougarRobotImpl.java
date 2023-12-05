@@ -15,6 +15,7 @@ import team1403.lib.core.CougarRobot;
 import team1403.lib.util.CougarLogger;
 import team1403.robot.swerve.SwerveCommand;
 import team1403.robot.swerve.SwerveSubsystem;
+import team1403.robot.turret.Limelight;
 import team1403.robot.turret.Turret;
 /**
  * The heart of the robot.
@@ -45,16 +46,23 @@ public class CougarRobotImpl extends CougarRobot {
     CameraServer.startAutomaticCapture();
     m_autonChooser = new SendableChooser<Command>();
     m_Turret = new Turret();
+    m_limelight = new Limelight();
   }
   XboxController driveController = getXboxJoystick("Driver", RobotConfig.Driver.pilotPort);
-  XboxController operatorController = getXboxJoystick("Driver", RobotConfig.Driver.pilotPort);
+  XboxController operatorController = getXboxJoystick("Operator", RobotConfig.Operator.pilotPort);
 
   @Override
   public void robotInit() {
     AutoManager.getInstance().init(m_swerveSubsystem);
     m_autonChooser.setDefaultOption("Pathplanner auto", AutoManager.getInstance().getPathplannerAuto(m_swerveSubsystem));
     SmartDashboard.putData(m_autonChooser);
+    Limelight.turnOff();
     super.robotInit();  
+  }
+
+  @Override
+  public void disabledPeriodic() {
+      Limelight.turnOff();
   }
 
   @Override
@@ -74,18 +82,22 @@ public class CougarRobotImpl extends CougarRobot {
   public void teleopPeriodicOperator() {
    if (operatorController.getAButton())
     m_Turret.centerPoint();
-  m_Turret.setSpeed(operatorController.getLeftX());
+  else
+    m_Turret.setSpeed(operatorController.getLeftX());
 
   }
   @Override
   public void teleopInit() {
     m_swerveSubsystem.setYawGyroscopeOffset(180 - m_swerveSubsystem.getGyroscopeRotation().getDegrees());
+    m_Turret.setOffset(m_Turret.getEncoder().getTurretAngle());
+    Limelight.turnOn();
     configureDriverInterface();
   }
   @Override
   public void teleopPeriodic() {
     teleopPeriodicDriver();
     teleopPeriodicOperator();
+    m_limelight.teleopPeriodic();
   }
   /**
    * Configures the driver commands and their bindings.
@@ -166,5 +178,6 @@ public class CougarRobotImpl extends CougarRobot {
   // private final PhotonVisionSubsystem m_visionSubsystem;
   private final SwerveSubsystem m_swerveSubsystem;
   private final SendableChooser<Command> m_autonChooser;
+  public final Limelight m_limelight;
   private Turret m_Turret;
 }

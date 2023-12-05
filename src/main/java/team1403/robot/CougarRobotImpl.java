@@ -2,7 +2,6 @@ package team1403.robot;
 
 
 import com.fasterxml.jackson.databind.deser.impl.ValueInjector;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
@@ -12,8 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team1403.lib.core.CougarLibInjectedParameters;
 import team1403.lib.core.CougarRobot;
 import team1403.lib.util.CougarLogger;
@@ -21,7 +18,6 @@ import team1403.robot.swerve.SwerveCommand;
 import team1403.robot.swerve.SwerveSubsystem;
 import team1403.robot.turret.Turret;
 import team1403.robot.RobotConfig.Operator;
-
 /**
  * The heart of the robot.
  *
@@ -37,8 +33,6 @@ import team1403.robot.RobotConfig.Operator;
  * do things.
  */
 public class CougarRobotImpl extends CougarRobot {
-  XboxController xboxOperator = getXboxJoystick("Operator", Operator.pilotPort);
-
   /**
    * Constructor.
    *
@@ -50,10 +44,12 @@ public class CougarRobotImpl extends CougarRobot {
     var logger = CougarLogger.getChildLogger(
         parameters.getRobotLogger(), "BuiltinDevices");
     m_swerveSubsystem = new SwerveSubsystem( parameters);
-    m_Turret = new Turret();
     CameraServer.startAutomaticCapture();
     m_autonChooser = new SendableChooser<Command>();
+    m_Turret = new Turret();
   }
+  XboxController driveController = getXboxJoystick("Driver", RobotConfig.Driver.pilotPort);
+  XboxController operatorController = getXboxJoystick("Driver", RobotConfig.Driver.pilotPort);
 
   @Override
   public void robotInit() {
@@ -68,18 +64,33 @@ public class CougarRobotImpl extends CougarRobot {
     CommandScheduler.getInstance().removeDefaultCommand(m_swerveSubsystem);
     return m_autonChooser.getSelected();
   }
+  public void teleopPeriodicDriver() {
+    if (driveController.getXButton()) {
+      m_swerveSubsystem.zeroGyroscope();
+    }
+    if (driveController.getBButton()) {
+      m_swerveSubsystem.zeroGyroscope();
+    }
+    m_swerveSubsystem.setXModeEnabled(driveController.getXButton());
+  }
+  public void teleopPeriodicOperator() {
+    m_Turret.setSpeed(operatorController.getLeftX());
+    
+  }
   @Override
   public void teleopInit() {
-    //m_Turret.setSpeed(1);
     m_swerveSubsystem.setYawGyroscopeOffset(180 - m_swerveSubsystem.getGyroscopeRotation().getDegrees());
-    configureOperatorInterface();
     configureDriverInterface();
+  }
+  @Override
+  public void teleopPeriodic() {
+    teleopPeriodicDriver();
+    teleopPeriodicOperator();
   }
   /**
    * Configures the driver commands and their bindings.
    */
   public void configureDriverInterface() {
-    XboxController driveController = getXboxJoystick("Driver", RobotConfig.Driver.pilotPort);
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
@@ -92,22 +103,11 @@ public class CougarRobotImpl extends CougarRobot {
         () -> deadband(driveController.getRightX(), 0),
         () -> driveController.getYButton(),
         () -> driveController.getRightTriggerAxis()));
-       new Trigger(() -> driveController.getBButton()).onFalse(
-        new InstantCommand(() -> m_swerveSubsystem.zeroGyroscope()));
-    new Trigger(() -> driveController.getXButton())
-        .onTrue(new InstantCommand(() -> m_swerveSubsystem.setXModeEnabled(true)));
-    new Trigger(() -> driveController.getXButton())
-        .onFalse(new InstantCommand(() -> m_swerveSubsystem.setXModeEnabled(false)));
-    
   }
 
   /**
    * Configures the operator commands and their bindings.
    */
-  public void configureOperatorInterface() {
-    m_Turret.setDefaultCommand(new InstantCommand(() -> m_Turret.setSpeed(xboxOperator.getLeftX()), m_Turret));
-    new Trigger(() -> xboxOperator.getAButton()).onTrue(new InstantCommand(() -> m_Turret.setSpeed(xboxOperator.getLeftX())));
-  }
 
   /**
    * Applies a deadband to the given value.
@@ -171,5 +171,4 @@ public class CougarRobotImpl extends CougarRobot {
   private final SwerveSubsystem m_swerveSubsystem;
   private final SendableChooser<Command> m_autonChooser;
   private Turret m_Turret;
-  // private final LightSubsystem m_lightSubsystem;
 }

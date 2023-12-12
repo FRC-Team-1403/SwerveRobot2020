@@ -13,6 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team1403.lib.core.CougarLibInjectedParameters;
 import team1403.lib.core.CougarSubsystem;
 import team1403.lib.util.CougarLogger;
@@ -27,7 +28,7 @@ import team1403.lib.device.wpi.NavxAhrs;
 * The drivetrain of the robot. Consists of for swerve modules and the
 * gyroscope.
 */
-public class SwerveSubsystem extends CougarSubsystem {
+public class SwerveSubsystem extends SubsystemBase  {
   private final NavxAhrs m_navx2;
   private final SwerveModule[] m_modules;
 
@@ -72,29 +73,28 @@ public class SwerveSubsystem extends CougarSubsystem {
   * @param parameters the {@link CougarLibInjectedParameters}
   *                   used to construct this subsystem
   */
- public SwerveSubsystem(CougarLibInjectedParameters parameters) {
-   super("Swerve Subsystem", parameters);
-   CougarLogger logger = getLogger();
+ public SwerveSubsystem(RobotConfig parameters) {
+  //  super("Swerve Subsystem", parameters);
    m_navx2 = new NavxAhrs("Gyroscope");
    m_modules = new SwerveModule[] {
        new SwerveModule("Front Left Module",
            CanBus.frontLeftDriveId, CanBus.frontLeftSteerId,
-           CanBus.frontLeftEncoderId, Swerve.frontLeftEncoderOffset, logger),
+           CanBus.frontLeftEncoderId, Swerve.frontLeftEncoderOffset),
        new SwerveModule("Front Right Module",
            CanBus.frontRightDriveId, CanBus.frontRightSteerId,
-           CanBus.frontRightEncoderId, Swerve.frontRightEncoderOffset, logger, false),
+           CanBus.frontRightEncoderId, Swerve.frontRightEncoderOffset, false),
        new SwerveModule("Back Left Module",
            CanBus.backLeftDriveId, CanBus.backLeftSteerId,
-           CanBus.backLeftEncoderId, Swerve.backLeftEncoderOffset, logger),
+           CanBus.backLeftEncoderId, Swerve.backLeftEncoderOffset),
        new SwerveModule("Back Right Module",
            CanBus.backRightDriveId, CanBus.backRightSteerId,
-           CanBus.backRightEncoderId, Swerve.backRightEncoderOffset, logger, false),
+           CanBus.backRightEncoderId, Swerve.backRightEncoderOffset, false),
    };
 
    m_odometer = new SwerveDrivePoseEstimator(Swerve.kDriveKinematics, new Rotation2d(),
        getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
 
-   addDevice(m_navx2.getName(), m_navx2);
+  //  addDevice(m_navx2.getName(), m_navx2);
    if(m_navx2.isConnected())
     while (m_navx2.isCalibrating());
 
@@ -115,7 +115,6 @@ public class SwerveSubsystem extends CougarSubsystem {
   * @param amt the amount to increase the speed by
   */
  public void increaseSpeed(double amt) {
-   tracef("increasedSpeed %f", amt);
    m_speedLimiter = Math.min(1, m_speedLimiter + amt);
  }
 
@@ -125,7 +124,6 @@ public class SwerveSubsystem extends CougarSubsystem {
   * @param amt the amount to decrease the speed by
   */
  public void decreaseSpeed(double amt) {
-   tracef("decreasedSpeed %f", amt);
    m_speedLimiter = Math.max(0, m_speedLimiter - amt);
  }
 
@@ -153,7 +151,6 @@ public class SwerveSubsystem extends CougarSubsystem {
   * @param rate the ramp rate
   */
  public void setRobotRampRate(double rate) {
-   tracef("setRobotRampRate %f", rate);
    for (SwerveModule module : m_modules) {
      module.setRampRate(rate);
    }
@@ -165,7 +162,6 @@ public class SwerveSubsystem extends CougarSubsystem {
   * @param mode the IdleMode of the robot
   */
  public void setRobotIdleMode(IdleMode mode) {
-   tracef("setRobotIdleMode %s", mode.name());
    for (SwerveModule module : m_modules) {
      module.setControllerMode(mode);
    }
@@ -217,7 +213,6 @@ public class SwerveSubsystem extends CougarSubsystem {
   * Reset the position of the drivetrain odometry.
   */
  public void resetOdometry() {
-   tracef("resetOdometry");
    m_odometer.resetPosition(getGyroscopeRotation(), getModulePositions(), getPose());
  }
 
@@ -225,7 +220,6 @@ public class SwerveSubsystem extends CougarSubsystem {
   * Reset the position of the drivetrain odometry.
   */
  public void resetOdometry(Pose2d pose) {
-   tracef("resetOdometry %s", pose.toString());
    m_odometer.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
  }
 
@@ -272,7 +266,6 @@ public class SwerveSubsystem extends CougarSubsystem {
   * Stops the drivetrain.
   */
  public void stop() {
-   tracef("stop");
    m_chassisSpeeds = new ChassisSpeeds();
  }
 
@@ -435,8 +428,6 @@ public class SwerveSubsystem extends CougarSubsystem {
      if (Math.abs(calc) >= 0.55) {
        chassisSpeeds.omegaRadiansPerSecond += calc;
      }
-     tracef("driftCorrection %f, corrected omegaRadiansPerSecond %f",
-         calc, chassisSpeeds.omegaRadiansPerSecond);
    }
    return chassisSpeeds;
  }

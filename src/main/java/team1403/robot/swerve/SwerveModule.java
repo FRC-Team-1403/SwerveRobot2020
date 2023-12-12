@@ -39,7 +39,6 @@ public class SwerveModule implements Device {
     private final Encoder m_driveRelativeEncoder;
     private final RelativeEncoder m_steerRelativeEncoder;
     private final SparkMaxPIDController m_steerPidController;
-    private final CougarLogger m_logger;
     private final String m_name;
     private final boolean m_inverted;
 
@@ -58,21 +57,20 @@ public class SwerveModule implements Device {
      *
      */
     public SwerveModule(String name, int driveMotorPort, int steerMotorPort,
-        int canCoderPort, double offset, CougarLogger logger) {
-      this(name, driveMotorPort, steerMotorPort, canCoderPort, offset, logger, true);
+        int canCoderPort, double offset) {
+      this(name, driveMotorPort, steerMotorPort, canCoderPort, offset, true);
     }
 
     public SwerveModule(String name, int driveMotorPort, int steerMotorPort,
-    int canCoderPort, double offset, CougarLogger logger, boolean inverted)
+    int canCoderPort, double offset, boolean inverted)
     {
       m_inverted = inverted;
-      m_logger = logger;
       m_name = name;
   
       m_driveMotor = CougarSparkMax.makeBrushless("DriveMotor", driveMotorPort,
-          SparkMaxRelativeEncoder.Type.kHallSensor, logger);
+          SparkMaxRelativeEncoder.Type.kHallSensor);
       m_steerMotor = CougarSparkMax.makeBrushless("SteerMotor", steerMotorPort, 
-          SparkMaxRelativeEncoder.Type.kHallSensor, logger);
+          SparkMaxRelativeEncoder.Type.kHallSensor);
       m_absoluteEncoder = new CANCoder(canCoderPort);
       m_driveRelativeEncoder = m_driveMotor.getEmbeddedEncoder();
       m_absoluteEncoderOffset = offset;
@@ -162,7 +160,6 @@ public class SwerveModule implements Device {
      * @param mode its the mode for the controller.
      */
     public void setControllerMode(IdleMode mode) {
-      m_logger.tracef("setControllerMode %s %s", m_name, mode.toString());
       m_driveMotor.setIdleMode(mode);
     }
   
@@ -172,7 +169,6 @@ public class SwerveModule implements Device {
      * @param rate speed in seconds motor will take to ramp to speed
      */
     public void setRampRate(double rate) {
-      m_logger.tracef("setRampRate %s %f", m_name, rate);
       m_driveMotor.setOpenLoopRampRate(rate);
     }
   
@@ -245,8 +241,6 @@ public class SwerveModule implements Device {
       if (m_steerMotor.getEncoder().getVelocity() 
               < Swerve.kEncoderResetMaxAngularVelocity) {
         if (++m_absoluteEncoderResetIterations >= Swerve.kEncoderResetIterations) {
-          m_logger.tracef("Resetting steer relative encoder. Reset iteration %f", 
-              m_absoluteEncoderResetIterations);
           m_absoluteEncoderResetIterations = 0;
           double absoluteAngle = getAbsoluteAngle();    
           m_steerMotor.getEncoder().setPosition(getAbsoluteAngle());

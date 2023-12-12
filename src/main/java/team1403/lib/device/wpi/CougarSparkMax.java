@@ -20,12 +20,11 @@ public final class CougarSparkMax extends CANSparkMax implements AdvancedMotorCo
    * @param name        The name name for the device.
    * @param channel     The CAN channel the motor is on.
    * @param encoderType the type of encoder attached
-   * @param logger      The debug logger to use for the device.
    * @return Brushless CANSparkMax
    */
   public static CougarSparkMax makeBrushless(String name, int channel,
-      SparkMaxRelativeEncoder.Type encoderType, CougarLogger logger) {
-    return new CougarSparkMax(name, channel, MotorType.kBrushless, encoderType, logger);
+      SparkMaxRelativeEncoder.Type encoderType) {
+    return new CougarSparkMax(name, channel, MotorType.kBrushless, encoderType);
   }
 
   /**
@@ -34,12 +33,11 @@ public final class CougarSparkMax extends CANSparkMax implements AdvancedMotorCo
    * @param name        The name name for the device.
    * @param channel     The CAN channel the motor is on.
    * @param encoderType the type of encoder attached
-   * @param logger      The debug logger to use for the device.
    * @return Brushed CANSparkMax
    */
   public static CougarSparkMax makeBrushed(String name, int channel,
-      SparkMaxRelativeEncoder.Type encoderType, CougarLogger logger) {
-    return new CougarSparkMax(name, channel, MotorType.kBrushed, encoderType, logger);
+      SparkMaxRelativeEncoder.Type encoderType) {
+    return new CougarSparkMax(name, channel, MotorType.kBrushed, encoderType);
   }
 
   /**
@@ -49,13 +47,11 @@ public final class CougarSparkMax extends CANSparkMax implements AdvancedMotorCo
    * @param channel     The CAN channel the motor is on.
    * @param motorType   The type of motor connected
    * @param encoderType the type of encoder attached
-   * @param logger      The debug logger to use for the device.
    */
   private CougarSparkMax(String name, int channel, MotorType motorType,
-      SparkMaxRelativeEncoder.Type encoderType, CougarLogger logger) {
+      SparkMaxRelativeEncoder.Type encoderType) {
     super(channel, motorType);
     m_name = name;
-    m_logger = logger;
     if (encoderType == SparkMaxRelativeEncoder.Type.kNoSensor) {
       m_encoder = null;
     } else if (encoderType == SparkMaxRelativeEncoder.Type.kHallSensor) {
@@ -89,25 +85,23 @@ public final class CougarSparkMax extends CANSparkMax implements AdvancedMotorCo
    */
   @Override
   public void follow(AdvancedMotorController source) {
-    m_logger.tracef("follow %s <- %s", getName(), source.getName());
+    
     follow((CANSparkMax) source); // Will throw an exception if source is not compatible.
   }
 
   @Override
   public final void setVoltageCompensation(double voltage) {
-    m_logger.tracef("setVoltage %s %f", getName(), voltage);
+   
     super.enableVoltageCompensation(voltage);
   }
 
   @Override
   public final void setSpeed(double speed) {
-    m_logger.tracef("setSpeed %s %f", getName(), speed);
     super.set(speed);
   }
 
   @Override
   public void setPosition(double position) {
-    m_logger.errorf("Unsupported setPosition %s %d", getName(), position);
   }
 
   @Override
@@ -128,13 +122,11 @@ public final class CougarSparkMax extends CANSparkMax implements AdvancedMotorCo
 
   @Override
   public final void setRampRate(double ramp) {
-    m_logger.tracef("setRampRate %s %f", getName(), ramp);
     setClosedLoopRampRate(ramp);
   }
 
   @Override
   public final void stopMotor() {
-    m_logger.tracef(("stopMotor %s"), getName());
     super.stopMotor();
   }
 
@@ -250,6 +242,5 @@ public final class CougarSparkMax extends CANSparkMax implements AdvancedMotorCo
 
   private final EmbeddedEncoder m_encoder;
   private final EmbeddedCurrentSensor m_currentSensor;
-  private final CougarLogger m_logger;
   private final String m_name;
 }

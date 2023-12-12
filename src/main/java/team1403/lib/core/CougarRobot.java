@@ -72,8 +72,6 @@ public class CougarRobot {
    */
   public CougarRobot(CougarLibInjectedParameters parameters) {
     m_parameters = parameters;
-    m_logger = m_parameters.getRobotLogger();
-    m_logger.infof("Constructing CougarRobot as '%s'", getClass().getName());
   }
 
   /**
@@ -187,17 +185,6 @@ public class CougarRobot {
     // empty;
   }
 
-  /**
-   * Write a trace message to the logger.
-   *
-   * @param format The String.format string
-   * @param args The args to populate the String.format string.
-   */
-  protected void tracef(String format, Object... args) {
-    m_logger.tracef(format, args);
-  }
-
   private final CougarLibInjectedParameters m_parameters;
-  private final CougarLogger m_logger;
   private Mode m_mode = Mode.OFFLINE;
 }

@@ -39,7 +39,6 @@ public class CougarLibInjectedParameters {
      */
     public Builder(CougarLibInjectedParameters defaultValues) {
       m_clock = defaultValues.getClock();
-      m_robotLogger = defaultValues.getRobotLogger();
       m_deviceFactory = defaultValues.getDeviceFactory();
     }
 
@@ -64,17 +63,6 @@ public class CougarLibInjectedParameters {
     }
 
     /**
-     * Change the logger.
-     *
-     * @param logger The root robot logger the parameters will specify.
-     * @return this builder
-     */
-    public Builder robotLogger(CougarLogger logger) {
-      m_robotLogger = logger;
-      return this;
-    }
-
-    /**
      * Change the device factory.
      *
      * @param factory The device factory to use.
@@ -86,8 +74,6 @@ public class CougarLibInjectedParameters {
     }
 
     private Clock m_clock = WpiClock.instance();
-    private CougarLogger m_robotLogger
-        = CougarLogger.getCougarLogger("team1403.Robot");
     private DeviceFactory m_deviceFactory = new RealDeviceFactory();
   }  // end Builder
 
@@ -98,15 +84,6 @@ public class CougarLibInjectedParameters {
    */
   public Clock getClock() {
     return m_clock;
-  }
-
-  /**
-   * Returns the logger acting as the root logger for the robot.
-   *
-   * @return the configured logger
-   */
-  public CougarLogger getRobotLogger() {
-    return m_robotLogger;
   }
 
   /**
@@ -125,11 +102,9 @@ public class CougarLibInjectedParameters {
    */
   protected CougarLibInjectedParameters(Builder builder) {
     m_clock = builder.m_clock;
-    m_robotLogger = builder.m_robotLogger;
     m_deviceFactory = builder.m_deviceFactory;
   }
 
   private final Clock m_clock;
-  private final CougarLogger m_robotLogger;
   private final DeviceFactory m_deviceFactory;
 }

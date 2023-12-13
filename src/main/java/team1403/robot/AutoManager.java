@@ -11,7 +11,7 @@ import com.pathplanner.lib.auto.PIDConstants;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import team1403.robot.RobotConfig.Swerve;
+import team1403.robot.Constants.Swerve;
 import team1403.robot.swerve.SwerveSubsystem;
 
 public class AutoManager {
@@ -25,9 +25,9 @@ public class AutoManager {
 
   private final ProfiledPIDController thetaController = new ProfiledPIDController(
       4,
-      RobotConfig.Swerve.kIAutoTurning,
-      RobotConfig.Swerve.kDAutoTurning,
-      RobotConfig.Swerve.kThetaControllerConstraints);
+      Constants.Swerve.kIAutoTurning,
+      Constants.Swerve.kDAutoTurning,
+      Constants.Swerve.kThetaControllerConstraints);
 
   private Command pathplannerAuto;
 

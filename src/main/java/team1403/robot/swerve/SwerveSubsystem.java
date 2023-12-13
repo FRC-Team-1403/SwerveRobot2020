@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team1403.lib.core.CougarLibInjectedParameters;
 import team1403.lib.core.CougarSubsystem;
+import team1403.lib.device.wpi.NavxAhrs;
 import team1403.lib.util.CougarLogger;
 import team1403.lib.util.SwerveDriveOdometry;
 import team1403.lib.util.SwerveDrivePoseEstimator;
-import team1403.robot.RobotConfig;
-import team1403.robot.RobotConfig.Swerve;
-import team1403.robot.RobotConfig.CanBus;
-import team1403.lib.device.wpi.NavxAhrs;
+import team1403.robot.Constants;
+import team1403.robot.Constants.CanBus;
+import team1403.robot.Constants.Swerve;
 
 /**
 * The drivetrain of the robot. Consists of for swerve modules and the
@@ -37,20 +37,20 @@ public class SwerveSubsystem extends SubsystemBase  {
  private final SwerveDrivePoseEstimator m_odometer;
 
  private Translation2d frontRight = new Translation2d(
-     RobotConfig.Swerve.kTrackWidth / 2.0,
-     -RobotConfig.Swerve.kWheelBase / 2.0);
+     Constants.Swerve.kTrackWidth / 2.0,
+     -Constants.Swerve.kWheelBase / 2.0);
 
  private Translation2d frontLeft = new Translation2d(
-     RobotConfig.Swerve.kTrackWidth / 2.0,
-     RobotConfig.Swerve.kWheelBase / 2.0);
+     Constants.Swerve.kTrackWidth / 2.0,
+     Constants.Swerve.kWheelBase / 2.0);
 
  private Translation2d backRight = new Translation2d(
-     -RobotConfig.Swerve.kTrackWidth / 2.0,
-     -RobotConfig.Swerve.kWheelBase / 2.0);
+     -Constants.Swerve.kTrackWidth / 2.0,
+     -Constants.Swerve.kWheelBase / 2.0);
 
  private Translation2d backLeft = new Translation2d(
-     -RobotConfig.Swerve.kTrackWidth / 2.0,
-     RobotConfig.Swerve.kWheelBase / 2.0);
+     -Constants.Swerve.kTrackWidth / 2.0,
+     Constants.Swerve.kWheelBase / 2.0);
 
  private final PIDController m_driftCorrectionPid = new PIDController(0.75, 0, 0);
  private double m_desiredHeading = 0;
@@ -73,7 +73,7 @@ public class SwerveSubsystem extends SubsystemBase  {
   * @param parameters the {@link CougarLibInjectedParameters}
   *                   used to construct this subsystem
   */
- public SwerveSubsystem(RobotConfig parameters) {
+ public SwerveSubsystem(Constants parameters) {
   //  super("Swerve Subsystem", parameters);
    m_navx2 = new NavxAhrs("Gyroscope");
    m_modules = new SwerveModule[] {

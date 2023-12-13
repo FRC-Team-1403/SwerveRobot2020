@@ -6,6 +6,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import team1403.lib.core.CougarLibInjectedParameters;
+import team1403.lib.core.CougarRobot;
+import team1403.lib.util.CougarLogger;
+import team1403.robot.swerve.SwerveCommand;
+import team1403.robot.swerve.SwerveSubsystem;
+import team1403.robot.turret.Limelight;
+import team1403.robot.turret.Turret;
+
 import com.fasterxml.jackson.databind.deser.impl.ValueInjector;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -15,24 +23,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import team1403.lib.core.CougarLibInjectedParameters;
-import team1403.lib.core.CougarRobot;
-import team1403.lib.util.CougarLogger;
-import team1403.robot.swerve.SwerveCommand;
-import team1403.robot.swerve.SwerveSubsystem;
-import team1403.robot.turret.Limelight;
-import team1403.robot.turret.Turret;
 
 public class RobotContainer {
   SwerveSubsystem m_swerveSubsystem;
   SendableChooser<Command> m_autonChooser = new SendableChooser<Command>();
   Turret m_Turret = new Turret();
   Limelight m_limelight = new Limelight();
-    XboxController driveController = getXboxJoystick("Driver", RobotConfig.Driver.pilotPort);
-  XboxController operatorController = getXboxJoystick("Operator", RobotConfig.Operator.pilotPort);
+    XboxController driveController = getXboxJoystick("Driver", Constants.Driver.pilotPort);
+  XboxController operatorController = getXboxJoystick("Operator", Constants.Operator.pilotPort);
 
 
-  public RobotContainer(RobotConfig parameters) {
+  public RobotContainer(Constants parameters) {
     m_swerveSubsystem = new SwerveSubsystem(parameters);
     CameraServer.startAutomaticCapture();
     configureButtonBindings();

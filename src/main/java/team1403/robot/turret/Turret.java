@@ -7,7 +7,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import team1403.robot.RobotConfig;
+import team1403.robot.Constants;
+
 import java.util.function.DoubleSupplier;
 
 public class Turret extends SubsystemBase {
@@ -17,9 +18,9 @@ public class Turret extends SubsystemBase {
     private TurretEncoderV2 absEncoder;
     
     public Turret() {
-        yawMotor = new TalonSRX(RobotConfig.Turret.turretMotor);
+        yawMotor = new TalonSRX(Constants.Turret.turretMotor);
         yawMotor.setInverted(true);
-        absEncoder = new TurretEncoderV2(RobotConfig.Turret.absEncoderPort);
+        absEncoder = new TurretEncoderV2(Constants.Turret.absEncoderPort);
     }
     
     public void setSpeedManual(double in) {

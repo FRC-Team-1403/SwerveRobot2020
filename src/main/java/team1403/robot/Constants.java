@@ -25,7 +25,7 @@ import team1403.lib.util.Dimension;
  * to make it easier to see how the robot should be wired and see
  * any conflicts since these ports specify their config together.
  */
-public class RobotConfig {
+public class Constants {
 
   //Variables to used by all subsystems.
   public static final Dimension robotDimensions = new Dimension(0, 0, 0);

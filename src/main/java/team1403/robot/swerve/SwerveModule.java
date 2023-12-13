@@ -16,12 +16,12 @@ import com.revrobotics.CANSparkMax.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import team1403.lib.device.wpi.CougarSparkMax;
 import team1403.lib.device.Device;
 import team1403.lib.device.Encoder;
-import team1403.lib.device.wpi.CougarSparkMax;
 import team1403.lib.util.CougarLogger;
-import team1403.robot.RobotConfig;
-import team1403.robot.RobotConfig.Swerve;
+import team1403.robot.Constants;
+import team1403.robot.Constants.Swerve;
 
 /**
  * Represents a swerve module. Consists of a drive motor, steer motor, 
@@ -135,8 +135,8 @@ public class SwerveModule implements Device {
   
     public void initDriveMotor() {
       m_driveMotor.setInverted(m_inverted);
-      m_driveMotor.setVoltageCompensation(RobotConfig.Swerve.kVoltageSaturation);
-      m_driveMotor.setSmartCurrentLimit(RobotConfig.Swerve.kCurrentLimit);
+      m_driveMotor.setVoltageCompensation(Constants.Swerve.kVoltageSaturation);
+      m_driveMotor.setSmartCurrentLimit(Constants.Swerve.kCurrentLimit);
       m_driveMotor.getCanSparkMaxApi().setPeriodicFramePeriod(
           CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100);
       m_driveMotor.getCanSparkMaxApi().setPeriodicFramePeriod(

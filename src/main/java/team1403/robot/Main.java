@@ -1,43 +1,25 @@
-package team1403.robot;
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
-import java.util.function.Function;
+package frc.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
 
-import team1403.lib.core.CougarLibInjectedParameters;
-import team1403.lib.core.WpiLibRobotAdapter;
-
 /**
- * It is unlikely that anything will go here.
- *
- * <p>This is only a wrapper to bootstrap the WPI libraries.
- * The WPI library will construct our CougarRobot class and call
- * into it.
- *
- * <p>Our code is in the CougarRobotImpl class and its dependencies.
+ * Do NOT add any static variables to this class, or any initialization at all. Unless you know what
+ * you are doing, do not modify this file except to change the parameter class to the startRobot
+ * call.
  */
 public final class Main {
-  /**
-   * Class is not instantiatable.
-   */
   private Main() {}
 
   /**
-   * Robot program entry point.
+   * Main initialization function. Do not perform any initialization here.
    *
-   * @param args Command line args from java execution.
+   * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
-    // This is going to create our CougarRobotImpl when called.
-    Function<CougarLibInjectedParameters, CougarRobotImpl> cougarFactory =
-        (CougarLibInjectedParameters params) -> {
-          RobotConfig config = new RobotConfig();
-          return new CougarRobotImpl(params);
-        };
-
-    RobotBase.startRobot(
-        () -> {
-          return new WpiLibRobotAdapter<CougarRobotImpl>(cougarFactory);
-        });
+    RobotBase.startRobot(Robot::new);
   }
 }

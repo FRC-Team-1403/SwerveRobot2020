@@ -8,8 +8,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team1403.robot.RobotConfig;
-import team1403.robot.RobotConfig.Swerve;
+import team1403.robot.Constants;
+import team1403.robot.Constants.Swerve;
 
 /**
  * The default command for the swerve drivetrain subsystem.
@@ -65,20 +65,20 @@ public class SwerveCommand extends CommandBase {
     m_isFieldRelative = true;
 
     frontRight = new Translation2d(
-        RobotConfig.Swerve.kTrackWidth / 2.0,
-        -RobotConfig.Swerve.kWheelBase / 2.0);
+        Swerve.kTrackWidth / 2.0,
+        -Swerve.kWheelBase / 2.0);
 
     frontLeft = new Translation2d(
-        RobotConfig.Swerve.kTrackWidth / 2.0,
-        RobotConfig.Swerve.kWheelBase / 2.0);
+        Swerve.kTrackWidth / 2.0,
+        Swerve.kWheelBase / 2.0);
 
     backRight = new Translation2d(
-        -RobotConfig.Swerve.kTrackWidth / 2.0,
-        -RobotConfig.Swerve.kWheelBase / 2.0);
+        -Swerve.kTrackWidth / 2.0,
+        -Swerve.kWheelBase / 2.0);
 
     backLeft = new Translation2d(
-        -RobotConfig.Swerve.kTrackWidth / 2.0,
-        RobotConfig.Swerve.kWheelBase / 2.0);
+        -Swerve.kTrackWidth / 2.0,
+         Swerve.kWheelBase / 2.0);
 
     m_verticalTranslationLimiter = new SlewRateLimiter(8, -8, 0);
     m_horizontalTranslationLimiter = new SlewRateLimiter(8, -8, 0);
@@ -99,7 +99,7 @@ public class SwerveCommand extends CommandBase {
         * Swerve.kMaxSpeed;
     double angular = squareNum(m_rotationSupplier.getAsDouble()) * Swerve.kMaxAngularSpeed;
     Translation2d offset = new Translation2d();
-    double robotAngleinDegrees = m_drivetrainSubsystem.getGyroscopeRotation().getDegrees();
+    //double robotAngleinDegrees = m_drivetrainSubsystem.getGyroscopeRotation().getDegrees();
 
     if (m_isFieldRelative) {
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(vertical, horizontal,

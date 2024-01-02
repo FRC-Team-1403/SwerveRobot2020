@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import team1403.robot.turret.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,8 +35,9 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().enable();
         robotContainer = new RobotContainer();
 
-        limelightOff = new RunsDisabledInstantCommand(() -> robotContainer.getLimelight().setLEDState(LimelightLEDState.OFF));
-        limelightOn = new RunsDisabledInstantCommand(() -> robotContainer.getLimelight().setLEDState(LimelightLEDState.ON));
+        robotContainer.getLimelight();
+        limelightOff = new InstantCommand(() -> Limelight.turnOff());
+        limelightOn = new InstantCommand(() -> Limelight.turnOn());
     }
 
     @Override
@@ -50,7 +53,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        robotContainer.updateAuton();
+        //robotContainer.updateAuton();
     }
 
     @Override
@@ -69,6 +72,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousPeriodic() {
+        robotContainer.updateAuton();
     }
 
     @Override

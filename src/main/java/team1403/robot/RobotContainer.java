@@ -19,6 +19,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,14 +34,30 @@ public class RobotContainer {
   XboxController operatorController = getXboxJoystick("Operator", Constants.Operator.pilotPort);
 
 
-  public RobotContainer(Constants parameters) {
-    m_swerveSubsystem = new SwerveSubsystem(parameters);
+  public RobotContainer() {
+    m_swerveSubsystem = new SwerveSubsystem();
     CameraServer.startAutomaticCapture();
     configureButtonBindings();
   }
 
-  private void configureButtonBindings() {
+  public Limelight getLimelight()
+  {
+    return m_limelight;
+  }
 
+  public Command getAutonCommand()
+  {
+    return null;
+  }
+
+  public void updateAuton()
+  {
+    
+  }
+
+
+  private void configureButtonBindings() {
+    configureDriverInterface();
   }
 
   public void configureDriverInterface() {

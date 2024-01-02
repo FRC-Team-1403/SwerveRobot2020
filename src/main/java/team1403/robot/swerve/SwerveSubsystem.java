@@ -73,7 +73,7 @@ public class SwerveSubsystem extends SubsystemBase  {
   * @param parameters the {@link CougarLibInjectedParameters}
   *                   used to construct this subsystem
   */
- public SwerveSubsystem(Constants parameters) {
+ public SwerveSubsystem() {
   //  super("Swerve Subsystem", parameters);
    m_navx2 = new NavxAhrs("Gyroscope");
    m_modules = new SwerveModule[] {
@@ -418,7 +418,8 @@ public class SwerveSubsystem extends SubsystemBase  {
   * @return the corrected chassisspeeds
   */
  private ChassisSpeeds translationalDriftCorrection(ChassisSpeeds chassisSpeeds) {
-
+    if(!m_navx2.isConnected())
+      return chassisSpeeds;
    double translationalVelocity = Math.abs(m_modules[0].getDriveVelocity());
    if (Math.abs(m_navx2.getAngularVelocity()) > 0.1) {
      m_desiredHeading = getGyroscopeRotation().getDegrees();
@@ -447,6 +448,11 @@ public class SwerveSubsystem extends SubsystemBase  {
    // Assuming the control loop runs in 20ms
    final double deltaTime = 0.02;
 
+   if(!m_navx2.isConnected())
+   {
+    return chassisSpeeds;
+   }
+
    // The position of the bot one control loop in the future given the chassisspeed
    Pose2d robotPoseVel = new Pose2d(chassisSpeeds.vxMetersPerSecond * deltaTime,
        chassisSpeeds.vyMetersPerSecond * deltaTime,
@@ -471,8 +477,8 @@ public class SwerveSubsystem extends SubsystemBase  {
    if (this.m_isXModeEnabled) {
      xMode();
    } else {
-     //m_chassisSpeeds = translationalDriftCorrection(m_chassisSpeeds);
-     //m_chassisSpeeds = rotationalDriftCorrection(m_chassisSpeeds);
+     m_chassisSpeeds = translationalDriftCorrection(m_chassisSpeeds);
+     m_chassisSpeeds = rotationalDriftCorrection(m_chassisSpeeds);
 
      m_states = Swerve.kDriveKinematics.toSwerveModuleStates(m_chassisSpeeds, m_offset);
      setModuleStates(m_states);

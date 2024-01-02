@@ -12,7 +12,8 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import team1403.robot.RobotConfig.Swerve;
+import team1403.robot.Constants;
+import team1403.robot.Constants.Swerve;
 
 /**
  * Autonomous command to be used with the CSE.

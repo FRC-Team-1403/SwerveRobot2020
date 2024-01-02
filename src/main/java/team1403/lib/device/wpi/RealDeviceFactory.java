@@ -44,8 +44,8 @@ public class RealDeviceFactory implements DeviceFactory {
    */
   @Override
   public AdvancedMotorController makeBrushlessCanSparkMax(
-      String name, int channel, Type encoderType, CougarLogger logger) {
-    return CougarSparkMax.makeBrushless(name, channel, encoderType, logger);
+      String name, int channel, Type encoderType) {
+    return CougarSparkMax.makeBrushless(name, channel, encoderType);
   }
 
   /**
@@ -53,8 +53,8 @@ public class RealDeviceFactory implements DeviceFactory {
    */
   @Override
   public AdvancedMotorController makeBrushedCanSparkMax(
-      String name, int channel, Type encoderType, CougarLogger logger) {
-    return CougarSparkMax.makeBrushed(name, channel, encoderType, logger);
+      String name, int channel, Type encoderType) {
+    return CougarSparkMax.makeBrushed(name, channel, encoderType);
   }
 
   /**

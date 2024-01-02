@@ -97,7 +97,6 @@ public class WpiLibRobotAdapter<T extends CougarRobot> extends TimedRobot {
       parameterBuilder = T.newParameterBuilder(m_defaultInjectedParameters);
     } else {
       parameterBuilder = T.newParameterBuilder();
-      parameterBuilder.robotLogger(CougarLogger.getCougarLogger("team1403.Robot"));
     }
     var parameters = parameterBuilder.build();
     Clock clock = parameters.getClock();

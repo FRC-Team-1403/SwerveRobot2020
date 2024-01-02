@@ -153,15 +153,15 @@ public class MappedDeviceFactory implements DeviceFactory {
 
   @Override
   public AdvancedMotorController makeBrushlessCanSparkMax(
-      String name, int channel, SparkMaxRelativeEncoder.Type encoderType, CougarLogger logger) {
-    m_calls.put(name, Arrays.asList(name, Integer.valueOf(channel), encoderType, logger));
+      String name, int channel, SparkMaxRelativeEncoder.Type encoderType) {
+    m_calls.put(name, Arrays.asList(name, Integer.valueOf(channel), encoderType));
     return (AdvancedMotorController)takeDevice(name);
   }
 
   @Override
   public AdvancedMotorController makeBrushedCanSparkMax(
-      String name, int channel, SparkMaxRelativeEncoder.Type encoderType, CougarLogger logger) {
-    m_calls.put(name, Arrays.asList(name, Integer.valueOf(channel), encoderType, logger));
+      String name, int channel, SparkMaxRelativeEncoder.Type encoderType) {
+    m_calls.put(name, Arrays.asList(name, Integer.valueOf(channel), encoderType));
     return (AdvancedMotorController)takeDevice(name);
   }
 

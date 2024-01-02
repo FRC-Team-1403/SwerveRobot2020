@@ -39,8 +39,6 @@ public abstract class CougarSubsystem extends SubsystemBase {
                          CougarLibInjectedParameters injectedParameters) {
     setName(name);
     setSubsystem(name);
-    m_logger = CougarLogger.getChildLogger(
-        injectedParameters.getRobotLogger(), name);
   }
 
   /**
@@ -61,35 +59,4 @@ public abstract class CougarSubsystem extends SubsystemBase {
       SendableRegistry.setName((Sendable)device, getName(), shortName);
     }
   }
-
-  /**
-   * Returns subsystem logger.
-   *
-   * @return logger bound in constructor.
-   */
-  public final CougarLogger getLogger() {
-    return m_logger;
-  }
-
-  /**
-   * Convienence function to log TRACE messages.
-   *
-   * @param format The message format string.
-   * @param args The args for the format string.
-   */
-  public void tracef(String format, Object... args) {
-    m_logger.tracef(format, args);
-  }
-
-  /**
-   * Convienence function to log DEBUG messages.
-   *
-   * @param format The message format string.
-   * @param args The args for the format string.
-   */
-  public void debugf(String format, Object... args) {
-    m_logger.debugf(format, args);
-  }
-
-  final CougarLogger m_logger;
 }

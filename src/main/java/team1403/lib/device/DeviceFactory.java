@@ -44,7 +44,7 @@ public interface DeviceFactory {
    * @return a new MotorController for a CANSparkMax.
    */
   public AdvancedMotorController makeBrushedCanSparkMax(String name, int channel, 
-          SparkMaxRelativeEncoder.Type encoderType, CougarLogger logger);
+          SparkMaxRelativeEncoder.Type encoderType);
 
   /**
    * Creates a Brusheless CANSparkMax MotorController.
@@ -57,7 +57,7 @@ public interface DeviceFactory {
    * @return a new MotorController for a CANSparkMax.
    */
   public AdvancedMotorController makeBrushlessCanSparkMax(String name, int channel,
-          SparkMaxRelativeEncoder.Type encoderType, CougarLogger logger);
+          SparkMaxRelativeEncoder.Type encoderType);
 
   /**
    * Creates a TalonSrx MotorController.

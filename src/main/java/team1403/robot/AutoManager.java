@@ -72,6 +72,6 @@ public class AutoManager {
    */
   public Command getPathplannerAuto(SwerveSubsystem swerve) {
     //swerve.setSpeedLimiter(0.5);
-    return new InstantCommand(() -> swerve.setSpeedLimiter(1.0), swerve).andThen(pathplannerAuto);
+    return pathplannerAuto;
   }
 }

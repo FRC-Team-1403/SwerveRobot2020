@@ -1,32 +1,19 @@
 package team1403.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import team1403.lib.core.CougarLibInjectedParameters;
-import team1403.lib.core.CougarRobot;
 import team1403.lib.util.CougarLogger;
 import team1403.robot.swerve.SwerveCommand;
 import team1403.robot.swerve.SwerveSubsystem;
 import team1403.robot.turret.Limelight;
 import team1403.robot.turret.Turret;
 
-import com.fasterxml.jackson.databind.deser.impl.ValueInjector;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class RobotContainer {
-  SwerveSubsystem m_swerveSubsystem;
+  private SwerveSubsystem m_swerveSubsystem;
   SendableChooser<Command> m_autonChooser = new SendableChooser<Command>();
   Turret m_Turret = new Turret();
   Limelight m_limelight = new Limelight();
@@ -47,12 +34,17 @@ public class RobotContainer {
 
   public Command getAutonCommand()
   {
-    return null;
+    return m_autonChooser.getSelected();
+  }
+
+  public void initAuto()
+  {
+    m_swerveSubsystem.setSpeedLimiter(1.0);
   }
 
   public void updateAuton()
   {
-    
+    m_swerveSubsystem.setSpeedLimiter(1.0);
   }
 
 

@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         LiveWindow.enableAllTelemetry();
         limelightOn.schedule();
+        robotContainer.initAuto();
         Command autonCommand = robotContainer.getAutonCommand();
 
         if (autonCommand != null){

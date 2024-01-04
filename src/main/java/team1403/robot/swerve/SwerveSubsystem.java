@@ -170,7 +170,7 @@ public class SwerveSubsystem extends SubsystemBase  {
  /**
   * Sets the gyroscope angle to zero. This can be used to set the direction the
   * robot is currently facing to the
-  * 'forwards' direction.
+  * 'forwards' directi=on.
   */
  public void zeroGyroscope() {
    // tracef("zeroGyroscope %f", getGyroscopeRotation());

@@ -22,8 +22,8 @@ public class Robot extends TimedRobot {
     public static RobotContainer robotContainer;
 
     public static boolean isInTestMode = false;
-    private Command limelightOff;
-    private Command limelightOn;
+    //private Command limelightOff;
+    //private Command limelightOn;
 
 
     /**
@@ -36,8 +36,8 @@ public class Robot extends TimedRobot {
         robotContainer = new RobotContainer();
 
         robotContainer.getLimelight();
-        limelightOff = new InstantCommand(() -> Limelight.turnOff());
-        limelightOn = new InstantCommand(() -> Limelight.turnOn());
+        //limelightOff = new InstantCommand(() -> Limelight.turnOff());
+        //limelightOn = new InstantCommand(() -> Limelight.turnOn());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         LiveWindow.enableAllTelemetry();
-        limelightOff.schedule();
+        //limelightOff.schedule();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         LiveWindow.enableAllTelemetry();
-        limelightOn.schedule();
+        //limelightOn.schedule();
         robotContainer.initAuto();
         Command autonCommand = robotContainer.getAutonCommand();
 
@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         LiveWindow.enableAllTelemetry();
-        limelightOn.schedule();
+       // limelightOn.schedule();
     }
 
     @Override

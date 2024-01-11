@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import team1403.robot.turret.Limelight;
+import team1403.robot.turret.PhotonVisionCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,9 +23,10 @@ public class Robot extends TimedRobot {
     public static RobotContainer robotContainer;
 
     public static boolean isInTestMode = false;
+
+    public static PhotonVisionCommand visionCommand;
     //private Command limelightOff;
     //private Command limelightOn;
-
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -35,7 +37,8 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().enable();
         robotContainer = new RobotContainer();
 
-        robotContainer.getLimelight();
+        visionCommand = new PhotonVisionCommand(robotContainer.getLimelight());
+
         //limelightOff = new InstantCommand(() -> Limelight.turnOff());
         //limelightOn = new InstantCommand(() -> Limelight.turnOn());
     }
@@ -80,6 +83,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         LiveWindow.enableAllTelemetry();
        // limelightOn.schedule();
+        robotContainer.getLimelight().setDefaultCommand(visionCommand);
     }
 
     @Override

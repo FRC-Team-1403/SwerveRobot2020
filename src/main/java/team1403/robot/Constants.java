@@ -60,7 +60,7 @@ public class Constants {
     public static final double kDTranslation = 0.5;
 
     public static final double kTrackWidth = Units.inchesToMeters(25.6);
-    public static final double kWheelBase = Units.inchesToMeters(26.75);
+    public static final double kWheelBase = Units.inchesToMeters(29.75);
 
     public static final SwerveDriveKinematics kDriveKinematics = 
         new SwerveDriveKinematics(

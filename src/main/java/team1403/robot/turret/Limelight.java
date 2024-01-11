@@ -1,77 +1,64 @@
 package team1403.robot.turret;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Limelight {
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonPipelineResult;
+
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class Limelight extends SubsystemBase {
+  private PhotonCamera limeLight;
+  private PhotonPipelineResult result;
+
+  private int pipelineIndex;
+
+  private double cameraHeightMeters = 0.635;
+  private double targetHeightMeters = 1.3208;
+  private double cameraPitchDegrees = 0;
+
+  public Limelight() {
+    // Photonvision
+    PortForwarder.add(5800, "photonvision.local", 5800);
+    limeLight = new PhotonCamera("1403Camera");
+
+    // 0: April Tags
+    // 1: Reflective Tape
+    limeLight.setPipelineIndex(0);
     
-    private final double TARGET_HEIGHT = 90;//inches //90 is acutal height
-    private final double CAMERA_HEIGHT = 34;//inches
-    private final double CAMERA_ANGLE = 20;//degrees
-    private final double zOffset = 29;
-    private final double errorLeniency = 1.5;
-    private double prevDistance = 0;
-    private boolean shouldAdjust = false;
+    result = new PhotonPipelineResult();
 
-    public double getEntry(String entryName){
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry(entryName).getDouble(0.0);
-    }
+    //Cone detection
+  }
 
-    public static void setEntry(String entryName, double value) {
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry(entryName).setNumber(value);
-    }
+  public double getXDistance() {
+    result = limeLight.getLatestResult();
+    return result.hasTargets() ? result.getBestTarget().getYaw() : 0;
+  }
 
-    public void configureUseMode(boolean adjust) {
-        this.shouldAdjust = adjust;
-    }
+  public double getZDistance(){
+    return (Math.pow(getDistanceFromTarget(),2) - Math.pow(getXDistance(),2));
+  }
 
-    public boolean getShouldAdjust() {
-        return shouldAdjust;
-    }
+  public double getZAngle() {
+    return Math.acos(getZDistance()/getDistanceFromTarget());
+  }
 
-    public static void turnOn() {
-        setEntry("ledMode", 3);
+  public double getDistanceFromTarget() {
+    result = limeLight.getLatestResult();
+    if (result.hasTargets()) {
+      double distanceToTarget =  PhotonUtils.calculateDistanceToTargetMeters(
+        cameraHeightMeters,
+        targetHeightMeters,
+        Units.degreesToRadians(cameraPitchDegrees),
+        Units.degreesToRadians(result.getBestTarget().getPitch()));
+      return distanceToTarget;
     }
+    return 0;
+  }
 
-    public static void turnOff() {
-        setEntry("ledMode", 1);
-    }
-
-    public double getX() {
-        return getEntry("tx");
-    }
-
-    public double getAdjustedX(double fieldRelativeAngle) {
-        double phi = 90 - getX() - fieldRelativeAngle;
-        double dist = getDistanceToTarget();
-        double comp = phi - Math.atan2((dist*Math.sin(Math.toRadians(phi))), dist * Math.cos(Math.toRadians(phi)) + zOffset);
-        comp = Math.toDegrees(comp);
-        //SmartDashboard.putNumber("Comp", comp);
-        return (comp + getX());
-    }
-
-    public double getY() {
-        return getEntry("ty");
-    }
-
-    public boolean isCentered() {
-        return Math.abs(getX()) < errorLeniency;
-    }
-
-    public boolean hasTarget() {
-        if(getEntry("tv") == 0) {
-            return false;
-        }
-        return true;
-    }
-    
-    public double getDistanceToTarget() {
-        return (TARGET_HEIGHT - CAMERA_HEIGHT) 
-            / Math.tan((CAMERA_ANGLE + getEntry("ty")) / 180 * Math.PI);
-    }
-    public void teleopPeriodic() {
-        SmartDashboard.putNumber("Get Entry Limelight", getEntry("null"));
-        SmartDashboard.putNumber("Limelight Distance", getDistanceToTarget());
-        SmartDashboard.putNumber("Limelight Y", getY());
-        SmartDashboard.putNumber("Limelight X", getX());
-    }
+  @Override
+  public void periodic() {
+  }
 }
